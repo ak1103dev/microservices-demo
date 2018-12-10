@@ -1,0 +1,25 @@
+version: '3'
+services:
+  rabbitmq:
+    image: rabbitmq:3
+    ports:
+      - "5672:5672"
+      - "25672:25672"
+      - "4369:4369"
+  router:
+    build: ./services/router
+    depends_on:
+      - rabbitmq
+    command: npm start
+    working_dir: /app
+    volumes:
+      - ./services/router:/app
+    ports:
+      - "3000:3000"
+  # user:
+  #   build: ./services/user
+  #   depends_on:
+  #     - rabbitmq
+  #   working_dir: /app
+  #   volumes:
+  #     - ./services/user:/app
